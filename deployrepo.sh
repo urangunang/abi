@@ -1,36 +1,38 @@
 #!/bin/bash
 
-# Array dengan daftar URL repositori
-repos=(
-    "https://github.com/urangunang/roleplaymenfess"
-    "https://github.com/urangunang/nekomenfess"
-    "https://github.com/urangunang/fwbindon"
-    "https://github.com/urangunang/fwbtelegram"
-    "https://github.com/urangunang/NekoMusicBot"
-)
+# Daftar URL repositori
+repos=("https://github.com/urangunang/roleplaymenfess" "https://github.com/urangunang/nekomenfess" "https://github.com/urangunang/fwbindon" "https://github.com/urangunang/fwbtelegram" "https://github.com/urangunang/NekoMusicBot")
 
-# Loop untuk meng-clone repositori dan menjalankan main.py
-for repo_url in "${repos[@]}"
-do
-    # Ambil nama repositori dari URL
-    repo_name=$(basename $repo_url)
-    
-    # Clone repositori
-    git clone $repo_url
-    
-    # Pindah ke direktori repositori
-    cd $repo_name
-    
-    # Instalasi dependensi menggunakan requirements.txt jika ada
-    if [ -f "requirements.txt" ]; then
-        pip3 install -r requirements.txt
-    fi
+# Token GitHub
+token="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"
 
-    # Jalankan main.py jika ada
-    if [ -f "main.py" ]; then
-        python3 main.py &
-    fi
+# Loop melalui setiap repositori
+for repo in "${repos[@]}"; do
+  # Clone repositori
+  git clone "$repo"
 
-    # Kembali ke direktori awal
-    cd ..
+  # Mendapatkan nama direktori dari URL repositori
+  dir_name=$(basename "$repo" .git)
+
+  # Masuk ke direktori repositori
+  cd "$dir_name"
+
+  # Install dependensi dari requirements.txt
+  pip install -r requirements.txt
+
+  # Jalankan python3 main.py
+  python3 main.py
+
+  # Kembali ke direktori awal
+  cd ..
 done
+
+# Khusus untuk NekoMusicBot
+cd "NekoMusicBot"
+
+# Install dependensi dari requirements.txt
+pip install -r requirements.txt
+
+# Jalankan perintah khusus
+mv sample.env .env
+bash neko
