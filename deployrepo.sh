@@ -1,38 +1,44 @@
 #!/bin/bash
 
-# Daftar URL repositori
-repos=("https://github.com/urangunang/roleplaymenfess" "https://github.com/urangunang/nekomenfess" "https://github.com/urangunang/fwbindon" "https://github.com/urangunang/fwbtelegram" "https://github.com/urangunang/NekoMusicBot")
+# Daftar repo dan direktori yang akan di-clone
+repos=("roleplaymenfess" "nekomenfess" "fwbindon" "fwbtelegram" "NekoMusicBot")
+directories=("repo1" "repo2" "repo3" "repo4" "repo5")
 
 # Token GitHub
 token="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"
 
-# Loop melalui setiap repositori
-for repo in "${repos[@]}"; do
-  # Clone repositori
-  git clone "$repo"
+# Loop untuk meng-clone dan menjalankan repo
+for ((i=0; i<${#repos[@]}; i++)); do
+    repo=${repos[i]}
+    directory=${directories[i]}
 
-  # Mendapatkan nama direktori dari URL repositori
-  dir_name=$(basename "$repo" .git)
+    # Clone repo
+    git clone "https://$token@github.com/urangunang/$repo.git" $directory
 
-  # Masuk ke direktori repositori
-  cd "$dir_name"
+    # Masuk ke direktori repo
+    cd $directory
 
-  # Install dependensi dari requirements.txt
-  pip install -r requirements.txt
+    # Install python3.10 jika repo adalah NekoMusicBot
+    if [ "$repo" == "NekoMusicBot" ]; then
+        sudo apt-get install python3.10
+        python3.10 -m venv venv
+        source venv/bin/activate
+    fi
 
-  # Jalankan python3 main.py
-  python3 main.py
+    # Install requirements.txt
+    pip install -r requirements.txt
 
-  # Kembali ke direktori awal
-  cd ..
+    # Jika repo adalah NekoMusicBot, jalankan perintah tambahan
+    if [ "$repo" == "NekoMusicBot" ]; then
+        mv sample.env .env
+        bash neko
+    else
+        python3.12 main.py &
+    fi
+
+    # Keluar dari direktori repo
+    cd ..
 done
 
-# Khusus untuk NekoMusicBot
-cd "NekoMusicBot"
-
-# Install dependensi dari requirements.txt
-pip install -r requirements.txt
-
-# Jalankan perintah khusus
-mv sample.env .env
-bash neko
+# Gunakan Screen untuk menjalankan semua repo
+screen -S "deployed-repos-session"
