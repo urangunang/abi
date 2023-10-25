@@ -4,23 +4,25 @@
 repos=("roleplaymenfess" "nekomenfess" "fwbindon" "fwbtelegram" "NekoMusicBot")
 directories=("repo1" "repo2" "repo3" "repo4" "repo5")
 
-# Token GitHub
-token="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"
-
 # Loop untuk meng-clone dan menjalankan repo
 for ((i=0; i<${#repos[@]}; i++)); do
     repo=${repos[i]}
     directory=${directories[i]}
 
     # Clone repo
-    git clone "https://$token@github.com/urangunang/$repo.git" $directory
+    git clone "https://github.com/urangunang/$repo.git" $directory
 
     # Masuk ke direktori repo
     cd $directory
 
-    # Install python3.10 jika repo adalah NekoMusicBot
+    # Periksa jika Python 3.10 sudah terinstal
     if [ "$repo" == "NekoMusicBot" ]; then
-        sudo apt-get install python3.10
+        python3.10 --version > /dev/null 2>&1
+        if [ $? -ne 0 ]; then
+            echo "Python 3.10 not installed. Installing..."
+            sudo apt-get install python3.10
+        fi
+
         python3.10 -m venv venv
         source venv/bin/activate
     fi
