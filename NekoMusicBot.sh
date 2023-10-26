@@ -6,10 +6,11 @@ git clone "https://github.com/urangunang/NekoMusicBot.git"
 # Masuk ke direktori repo
 cd NekoMusicBot
 
-# Install python3.10
-sudo apt-get install python3.10
-python3.10 -m venv venv
-source venv/bin/activate
+# Install Python 3.7.12 dengan pyenv
+pyenv install 3.7.12
+
+# Menggunakan Python 3.7.12 dalam lingkungan virtual
+pyenv local 3.7.12
 
 # Install requirements.txt
 pip install -r requirements.txt
@@ -17,5 +18,5 @@ pip install -r requirements.txt
 # Ubah nama berkas
 mv sample.env .env
 
-# Jalankan bash neko
+# Jalankan bash neko dalam sesi Screen
 screen -dmS NekoMusicBot-session bash neko
