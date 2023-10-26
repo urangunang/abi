@@ -3,13 +3,10 @@
 # Daftar repo yang akan di-clone
 repos=("roleplaymenfess" "nekomenfess" "fwbindon" "fwbtelegram" "NekoMusicBot")
 
-# Token GitHub
-token="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"
-
 # Loop untuk meng-clone dan menjalankan repo
 for repo in "${repos[@]}"; do
     # Clone repo
-    git clone "https://$token@github.com/urangunang/$repo.git"
+    git clone "https://github.com/urangunang/$repo.git"
 
     # Masuk ke direktori repo
     cd $repo
