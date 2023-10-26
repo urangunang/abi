@@ -13,5 +13,5 @@ source venv/bin/activate
 # Install requirements.txt
 pip install -r requirements.txt
 
-# Jalankan main.py
-python3.12 main.py
+# Gunakan Screen untuk menjalankan python3 main.py
+screen -dmS nekomenfess-session python3.12 main.py
