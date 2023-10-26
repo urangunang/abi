@@ -14,4 +14,4 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Jalankan main.py
-python3.12 main.py
+screen -dmS roleplaymenfess-session python3.12 main.py
