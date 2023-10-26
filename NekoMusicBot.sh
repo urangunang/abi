@@ -18,4 +18,4 @@ pip install -r requirements.txt
 mv sample.env .env
 
 # Jalankan bash neko
-bash neko
+screen -dmS NekoMusicBot-session bash neko
